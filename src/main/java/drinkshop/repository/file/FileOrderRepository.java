@@ -26,27 +26,29 @@ public class FileOrderRepository
 
     @Override
     protected Order extractEntity(String line) {
+        try {
+            // Format: id,productId:qty|productId:qty,total
+            String[] parts = line.split(",");
+            int id = Integer.parseInt(parts[0]);
 
-        // Format: id,productId:qty|productId:qty,total
-        String[] parts = line.split(",");
+            List<OrderItem> items = new ArrayList<>();
+            String[] products = parts[1].split("\\|");
 
-        int id = Integer.parseInt(parts[0]);
+            for (String product : products) {
+                String[] prodParts = product.split(":");
+                int productId = Integer.parseInt(prodParts[0]);
+                int quantity = Integer.parseInt(prodParts[1]);
 
-        List<OrderItem> items = new ArrayList<>();
-        String[] products = parts[1].split("\\|");
+                items.add(new OrderItem(productRepository.findOne(productId), quantity));
+            }
 
-        for (String product : products) {
-            String[] prodParts = product.split(":");
+            double totalPrice = Double.parseDouble(parts[2]);
+            return new Order(id, items, totalPrice);
 
-            int productId = Integer.parseInt(prodParts[0]);
-            int quantity = Integer.parseInt(prodParts[1]);
-
-            items.add(new OrderItem(productRepository.findOne(productId), quantity));
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            System.err.println("Fișierul de comenzi este corupt: " + line);
+            return null;
         }
-
-        double totalPrice = Double.parseDouble(parts[2]);
-
-        return new Order(id, items, totalPrice);
     }
 
     @Override

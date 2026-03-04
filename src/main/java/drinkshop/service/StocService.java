@@ -70,10 +70,14 @@ public class StocService {
                 if (ramas <= 0) break;
 
                 double deScazut = Math.min(s.getCantitate(), ramas);
-                s.setCantitate((int)(s.getCantitate() - deScazut));
+                s.setCantitate(s.getCantitate() - deScazut);
                 ramas -= deScazut;
 
                 stocRepo.update(s);
+            }
+
+            if (ramas > 0) {
+                throw new IllegalStateException("Stocul de " + ingredient + " s-a epuizat în timpul procesării.");
             }
         }
     }

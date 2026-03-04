@@ -20,12 +20,12 @@ public class DrinkShopService {
             Repository<Integer, Product> productRepo,
             Repository<Integer, Order> orderRepo,
             Repository<Integer, Reteta> retetaRepo,
-            Repository<Integer, Stoc> stocService
+            Repository<Integer, Stoc> stocRepo
     ) {
         this.productService = new ProductService(productRepo);
         this.orderService = new OrderService(orderRepo, productRepo);
         this.retetaService = new RetetaService(retetaRepo);
-        this.stocService = new StocService(stocService);
+        this.stocService = new StocService(stocRepo);
         this.report = new DailyReportService(orderRepo);
     }
 
@@ -82,6 +82,10 @@ public class DrinkShopService {
     // ---------- STOCK + RECIPE ----------
     public void comandaProdus(Product produs) {
         Reteta reteta = retetaService.findById(produs.getId());
+
+        if (reteta == null) {
+            throw new drinkshop.service.validator.ValidationException("Nu a fost găsită nicio rețetă pentru produsul " + produs.getNume());
+        }
 
         if (!stocService.areSuficient(reteta)) {
             throw new IllegalStateException("Stoc insuficient pentru produsul: " + produs.getNume());
