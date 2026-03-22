@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><title>testspec Proiect235 - pvir3595_BBT</title>
+<link type="text/css" rel="stylesheet" href="https://www.scs.ubbcluj.ro/testlink/gui/themes/default/css/tl_documents.css" />
+<style type="text/css" media="print">.notprintable { display:none;}</style>
+</head>
+<body>
+<div>
+<div style="float:right;">TestLink Community [configure $tlCfg-&gt;document_generator-&gt;company_name]</div>
+<div>&nbsp;</div><hr />
+<p style="text-align: center;"><img alt="TestLink logo" title="configure using $tlCfg->document_generator->company_logo"  width= height= src="https://www.scs.ubbcluj.ro/testlink/gui/themes/default/images/tl-logo-transparent-25.png" /></p></div>
+<div class="doc_title"><p>Test Specification</p></div>
+<div class="doc_title" style="text-align:left;margin: auto;"><p>Test Project: Proiect235<br/>Test Suite: Proiect235 - pvir3595_BBT</p></div>
+<div class="summary"><p id="printedby">Printed by TestLink on 22/03/2026</p></div>
+<div class="pagefooter" id="copyright">2012 &copy; TestLink Community</div>
+<h1 class="general" style="page-break-before: always">Table Of Contents</h1><div class="toc"><p style="padding-left: 20px;"><b><a href="#toc_1">1.pvir3595_BBT</a></b></p>
+<p style="padding-left: 45px;"><a href="#toc_tc28257">P235-14: TC_ECP_VALID_AdaugareProdus</a></p><p style="padding-left: 45px;"><a href="#toc_tc28265">P235-18: TC_ECP_INVALID_AdaugareProdus</a></p><p style="padding-left: 45px;"><a href="#toc_tc28267">P235-19: TC_BVA_VALID_AdaugareProdus</a></p><p style="padding-left: 45px;"><a href="#toc_tc28271">P235-21: TC_BVA_INVALID_AdaugareProdus</a></p></div><h1 class="doclevel" >Scope</h1>
+<div class="txtlevel"><p>Proiect de testare pentru studentii din grupa 235.</p></div>
+ <br/><a name='toc_1'></a>
+<h1 class='doclevel'>1.Test Suite : pvir3595_BBT</h1>
+<div><p>Se testează adăugarea unui produs.</p>
+</div><a name="toc_tc28257"></a><p>&nbsp;</p><div> <table class="tc" width="90%" ><tr><th colspan="4">Test Case P235-14: TC_ECP_VALID_AdaugareProdus&nbsp;<span style="font-size: 80%;">[Version  : 1]</span></th></tr>
+<tr><td width="20%" valign="top"><span class="label">Author:</span></td><td colspan="3">pvir3595</td></tr>
+<tr><td colspan="4"><span class="label">Summary:</span><br /><p>Caz de testare VALID pentru ECP&nbsp;<br />
+Acest test alege o valoare aleatorie din interiorul clasei de echivalență valide, un preț normal.</p>
+
+<p>Pași de reproducere:</p>
+
+<p>Selectează o rețetă validă din tabelul de rețete.</p>
+
+<p>Introdu Nume Produs: &quot;Limonadă cu mentă&quot;.</p>
+
+<p>Introdu Preț: 15.50, valoare din clasa validă &gt; 0.</p>
+
+<p>Selectează Categorie Bautură: NON_ALCOOLIC.</p>
+
+<p>Selectează Tip Bautură: RACORITOARE.</p>
+
+<p>Apasă butonul &quot;Add Product&quot;.</p>
+
+<p>Rezultat așteptat: Produsul este salvat cu succes, apare &icirc;n fișier, iar nicio eroare nu este afișată.</p>
+</td></tr><tr><td colspan="4"><span class="label">Preconditions:</span><br /><p>&nbsp;</p>
+
+<p>Precondiții:</p>
+
+<p>Aplicația este pornită.</p>
+
+<p>Există cel puțin o rețetă &icirc;n sistem care nu are deja un produs asociat.</p>
+</td></tr><tr><td width="20%" valign="top"><span class="label">Execution type:</span></td><td colspan="3">Automated</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Estimated exec. duration (min):</span></td><td colspan="3"></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Importance:</span></td><td colspan="3">Medium</td></tr>
+<tr><td colspan="4"></td></tr><tr><td > name of the autotest class:</td><td  colspan = "3" >Teste_Adaugare_Produs</td></tr>
+<tr><td > name of the test method:</td><td  colspan = "3" >TestAdaugareProdus_ECP_Valid</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Requirements</span><td colspan="3">pvir3595_F01:  AdaugareProdusNou [Version : 1]<br /></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Keywords:</span></td><td colspan="3">&nbsp;None<br/></td></tr>
+</table>
+</div>
+<a name="toc_tc28265"></a><p>&nbsp;</p><div> <table class="tc" width="90%" ><tr><th colspan="4">Test Case P235-18: TC_ECP_INVALID_AdaugareProdus&nbsp;<span style="font-size: 80%;">[Version  : 1]</span></th></tr>
+<tr><td width="20%" valign="top"><span class="label">Author:</span></td><td colspan="3">pvir3595</td></tr>
+<tr><td colspan="4"><span class="label">Summary:</span><br /><p>Acest test alege o valoare dintr-o clasă de echivalență invalidă, de exemplu, un număr negativ.</p>
+
+<p>Pași de reproducere:</p>
+
+<p>Selectează o rețetă validă.</p>
+
+<p>Introdu Nume Produs: &quot;Cafea Neagră&quot;.</p>
+
+<p>Introdu Preț: -10.00,&nbsp;valoare din clasa invalidă, preț negativ.</p>
+
+<p>Selectează Categorie: NON_ALCOOLIC.</p>
+
+<p>Selectează Tip: CAFEA.</p>
+
+<p>Apasă butonul &quot;Add Product&quot;.</p>
+
+<p>Rezultat așteptat: Sistemul trebuie să respingă salvarea și să afișeze un mesaj de eroare, spre exemplu: &quot;Prețul trebuie să fie mai mare dec&acirc;t 0!&quot;.</p>
+</td></tr><tr><td colspan="4"><span class="label">Preconditions:</span><br /><p>Precondiții:</p>
+
+<p>Aplicația este pornită.</p>
+
+<p>Există cel puțin o rețetă neasociată.</p>
+</td></tr><tr><td width="20%" valign="top"><span class="label">Execution type:</span></td><td colspan="3">Automated</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Estimated exec. duration (min):</span></td><td colspan="3"></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Importance:</span></td><td colspan="3">Medium</td></tr>
+<tr><td colspan="4"></td></tr><tr><td > name of the autotest class:</td><td  colspan = "3" >Teste_Adaugare_Produs</td></tr>
+<tr><td > name of the test method:</td><td  colspan = "3" >TestAdaugareProdus_ECP_Invalid</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Requirements</span><td colspan="3">pvir3595_F01:  AdaugareProdusNou [Version : 1]<br /></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Keywords:</span></td><td colspan="3">&nbsp;None<br/></td></tr>
+</table>
+</div>
+<a name="toc_tc28267"></a><p>&nbsp;</p><div> <table class="tc" width="90%" ><tr><th colspan="4">Test Case P235-19: TC_BVA_VALID_AdaugareProdus&nbsp;<span style="font-size: 80%;">[Version  : 1]</span></th></tr>
+<tr><td width="20%" valign="top"><span class="label">Author:</span></td><td colspan="3">pvir3595</td></tr>
+<tr><td colspan="4"><span class="label">Summary:</span><br /><p>Acest test verifică valoarea situată la limita inferioară de trecere &icirc;n intervalul valid. Fiind un preț (double), valoarea minimă acceptabilă este deasupra lui 0.</p>
+
+<p>Pași de reproducere:</p>
+
+<p>Selectează o rețetă validă.</p>
+
+<p>Introdu Nume Produs: &quot;Apă plată mică&quot;.</p>
+
+<p>Introdu Preț: 0.01,&nbsp;cea mai mică valoare validă posibilă deasupra limitei.</p>
+
+<p>Selectează Categorie: NON_ALCOOLIC.</p>
+
+<p>Selectează Tip: RACORITOARE.</p>
+
+<p>Apasă butonul &quot;Add Product&quot;.</p>
+
+<p>Rezultat așteptat: Produsul este salvat cu succes &icirc;n sistem și afișat &icirc;n tabel.</p>
+</td></tr><tr><td colspan="4"><span class="label">Preconditions:</span><br /><p>Precondiții:</p>
+
+<p>Aplicația este pornită.</p>
+
+<p>Există cel puțin o rețetă neasociată.</p>
+</td></tr><tr><td width="20%" valign="top"><span class="label">Execution type:</span></td><td colspan="3">Automated</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Estimated exec. duration (min):</span></td><td colspan="3"></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Importance:</span></td><td colspan="3">Medium</td></tr>
+<tr><td colspan="4"></td></tr><tr><td > name of the autotest class:</td><td  colspan = "3" >Teste_Adaugare_Produs</td></tr>
+<tr><td > name of the test method:</td><td  colspan = "3" >TestAdaugareProdus_BVA_Valid</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Requirements</span><td colspan="3">pvir3595_F01:  AdaugareProdusNou [Version : 1]<br /></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Keywords:</span></td><td colspan="3">&nbsp;None<br/></td></tr>
+</table>
+</div>
+<a name="toc_tc28271"></a><p>&nbsp;</p><div> <table class="tc" width="90%" ><tr><th colspan="4">Test Case P235-21: TC_BVA_INVALID_AdaugareProdus&nbsp;<span style="font-size: 80%;">[Version  : 1]</span></th></tr>
+<tr><td width="20%" valign="top"><span class="label">Author:</span></td><td colspan="3">pvir3595</td></tr>
+<tr><td colspan="4"><span class="label">Summary:</span><br /><p>Acest test verifică valoarea exactă de pe limita inferioară care ar trebui să nu fie permisă, prețul zero.</p>
+
+<p>Pași de reproducere:</p>
+
+<p>Selectează o rețetă validă.</p>
+
+<p>Introdu Nume Produs: &quot;Pahar cu gheață&quot;, presupun&acirc;nd că nu este gratis.</p>
+
+<p>Introdu Preț: 0.00, limita exactă, nepermisă.</p>
+
+<p>Selectează Categorie: NON_ALCOOLIC.</p>
+
+<p>Selectează Tip: DIVERSE.</p>
+
+<p>Apasă butonul &quot;Add Product&quot;.</p>
+
+<p>Rezultat așteptat: Adăugarea este oprită, sistemul returnează o eroare de tipul &quot;Prețul nu poate fi 0&quot;.</p>
+</td></tr><tr><td colspan="4"><span class="label">Preconditions:</span><br /><p>Precondiții:</p>
+
+<p>Aplicația este pornită.</p>
+
+<p>Există cel puțin o rețetă neasociată.</p>
+</td></tr><tr><td width="20%" valign="top"><span class="label">Execution type:</span></td><td colspan="3">Automated</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Estimated exec. duration (min):</span></td><td colspan="3"></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Importance:</span></td><td colspan="3">Medium</td></tr>
+<tr><td colspan="4"></td></tr><tr><td > name of the autotest class:</td><td  colspan = "3" >Teste_Adaugare_Produs</td></tr>
+<tr><td > name of the test method:</td><td  colspan = "3" >TestAdaugareProdus_BVA_Invalid</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Requirements</span><td colspan="3">pvir3595_F01:  AdaugareProdusNou [Version : 1]<br /></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Keywords:</span></td><td colspan="3">&nbsp;None<br/></td></tr>
+</table>
+</div>
+
+</body>
+</html>
