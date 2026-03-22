@@ -16,59 +16,46 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductServiceTest {
-
     private ProductService service;
     private ProductValidator validator;
 
     private Repository<Integer, Product> createMockRepo() {
         return new Repository<>() {
-            public Product save(Product entity) {
-                return entity;
-            }
-
-            public Product findOne(Integer id) {
-                return null;
-            }
-
-            public List<Product> findAll() {
-                return null;
-            }
-
-            public Product delete(Integer id) {
-                return null;
-            }
-
-            public Product update(Product entity) {
-                return null;
-            }
+            public Product save(Product entity) { return entity; }
+            public Product findOne(Integer id) { return null; }
+            public List<Product> findAll() { return null; }
+            public Product delete(Integer id) { return null; }
+            public Product update(Product entity) { return null; }
         };
     }
 
     @BeforeEach
     void setUp() {
+        // Se executa inaintea fiecarui test (pregateste mediul)
         service = new ProductService(createMockRepo());
         validator = new ProductValidator();
     }
 
     @AfterEach
     void tearDown() {
+        // Curata mediul dupa fiecare test
         service = null;
         validator = null;
     }
+
     // --- TESTE BVA PENTRU PARAMETRUL: ID ---
 
     @Test
     @DisplayName("TC1 Valid: ID-ul este exact la limita minimă admisă (1)")
     @Tag("BVA_ID")
-    @Timeout(value = 1, unit = TimeUnit.SECONDS)
+    @Timeout(value = 1, unit = TimeUnit.SECONDS) // Adnotare diferita 1, 2, 3
     void addProduct_IdAtLowerBoundary_Success() {
         // Arrange
-        ProductService service = new ProductService(createMockRepo());
         Product validProduct = new Product(1, "Limonada", 15.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
 
         // Act
         Executable act = () -> {
-            new ProductValidator().validate(validProduct);
+            validator.validate(validProduct);
             service.addProduct(validProduct);
         };
 
@@ -82,12 +69,11 @@ class ProductServiceTest {
     @Timeout(value = 1, unit = TimeUnit.SECONDS)
     void addProduct_IdJustAboveLowerBoundary_Success() {
         // Arrange
-        ProductService service = new ProductService(createMockRepo());
         Product validProduct = new Product(2, "Limonada", 15.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
 
         // Act
         Executable act = () -> {
-            new ProductValidator().validate(validProduct);
+            validator.validate(validProduct);
             service.addProduct(validProduct);
         };
 
@@ -101,12 +87,11 @@ class ProductServiceTest {
     @Timeout(value = 1, unit = TimeUnit.SECONDS)
     void addProduct_IdJustBelowLowerBoundary_ThrowsException() {
         // Arrange
-        ProductService service = new ProductService(createMockRepo());
         Product invalidProduct = new Product(0, "Limonada", 15.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
 
         // Act
         Executable act = () -> {
-            new ProductValidator().validate(invalidProduct);
+            validator.validate(invalidProduct);
             service.addProduct(invalidProduct);
         };
 
@@ -121,12 +106,11 @@ class ProductServiceTest {
     @Timeout(value = 1, unit = TimeUnit.SECONDS)
     void addProduct_IdNegative_ThrowsException() {
         // Arrange
-        ProductService service = new ProductService(createMockRepo());
         Product invalidProduct = new Product(-1, "Limonada", 15.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
 
         // Act
         Executable act = () -> {
-            new ProductValidator().validate(invalidProduct);
+            validator.validate(invalidProduct);
             service.addProduct(invalidProduct);
         };
 
@@ -134,6 +118,7 @@ class ProductServiceTest {
         ValidationException exception = assertThrows(ValidationException.class, act);
         assertTrue(exception.getMessage().contains("ID invalid!"));
     }
+
 
     // --- TESTE BVA PENTRU PARAMETRUL: PRET ---
 
@@ -143,12 +128,11 @@ class ProductServiceTest {
     @Timeout(value = 1, unit = TimeUnit.SECONDS)
     void addProduct_PriceAtLowerBoundary_Success() {
         // Arrange
-        ProductService service = new ProductService(createMockRepo());
         Product validProduct = new Product(10, "Limonada", 0.01, CategorieBautura.JUICE, TipBautura.WATER_BASED);
 
         // Act
         Executable act = () -> {
-            new ProductValidator().validate(validProduct);
+            validator.validate(validProduct);
             service.addProduct(validProduct);
         };
 
@@ -162,12 +146,11 @@ class ProductServiceTest {
     @Timeout(value = 1, unit = TimeUnit.SECONDS)
     void addProduct_PriceJustAboveLowerBoundary_Success() {
         // Arrange
-        ProductService service = new ProductService(createMockRepo());
         Product validProduct = new Product(10, "Limonada", 0.02, CategorieBautura.JUICE, TipBautura.WATER_BASED);
 
         // Act
         Executable act = () -> {
-            new ProductValidator().validate(validProduct);
+            validator.validate(validProduct);
             service.addProduct(validProduct);
         };
 
@@ -181,12 +164,11 @@ class ProductServiceTest {
     @Timeout(value = 1, unit = TimeUnit.SECONDS)
     void addProduct_PriceZero_ThrowsException() {
         // Arrange
-        ProductService service = new ProductService(createMockRepo());
         Product invalidProduct = new Product(10, "Limonada", 0.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
 
         // Act
         Executable act = () -> {
-            new ProductValidator().validate(invalidProduct);
+            validator.validate(invalidProduct);
             service.addProduct(invalidProduct);
         };
 
@@ -201,18 +183,94 @@ class ProductServiceTest {
     @Timeout(value = 1, unit = TimeUnit.SECONDS)
     void addProduct_PriceNegative_ThrowsException() {
         // Arrange
-        ProductService service = new ProductService(createMockRepo());
         Product invalidProduct = new Product(10, "Limonada", -1.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
 
         // Act
         Executable act = () -> {
-            new ProductValidator().validate(invalidProduct);
+            validator.validate(invalidProduct);
             service.addProduct(invalidProduct);
         };
 
         // Assert
         ValidationException exception = assertThrows(ValidationException.class, act);
         assertTrue(exception.getMessage().contains("Pret invalid!"));
+    }
+
+
+    // --- TESTE BVA PENTRU PARAMETRUL: NUME ---
+
+    @Test
+    @DisplayName("TC9 Valid: Numele are lungimea la limita minimă admisă (1 caracter)")
+    @Tag("BVA_Nume")
+    @Timeout(value = 1, unit = TimeUnit.SECONDS)
+    void addProduct_NameLengthAtLowerBoundary_Success() {
+        // Arrange
+        Product validProduct = new Product(10, "A", 15.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
+
+        // Act
+        Executable act = () -> {
+            validator.validate(validProduct);
+            service.addProduct(validProduct);
+        };
+
+        // Assert
+        assertDoesNotThrow(act, "Produsul cu numele de un caracter trebuie salvat cu succes.");
+    }
+
+    @Test
+    @DisplayName("TC10 Valid: Numele are lungimea imediat peste limita admisă (2 caractere)")
+    @Tag("BVA_Nume")
+    @Timeout(value = 1, unit = TimeUnit.SECONDS)
+    void addProduct_NameLengthJustAboveLowerBoundary_Success() {
+        // Arrange
+        Product validProduct = new Product(10, "Ab", 15.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
+
+        // Act
+        Executable act = () -> {
+            validator.validate(validProduct);
+            service.addProduct(validProduct);
+        };
+
+        // Assert
+        assertDoesNotThrow(act, "Produsul cu numele de doua caractere trebuie salvat cu succes.");
+    }
+
+    @Test
+    @DisplayName("TC11 Invalid: Numele este un string gol (lungime 0)")
+    @Tag("BVA_Nume")
+    @Timeout(value = 1, unit = TimeUnit.SECONDS)
+    void addProduct_NameEmpty_ThrowsException() {
+        // Arrange
+        Product invalidProduct = new Product(10, "", 15.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
+
+        // Act
+        Executable act = () -> {
+            validator.validate(invalidProduct);
+            service.addProduct(invalidProduct);
+        };
+
+        // Assert
+        ValidationException exception = assertThrows(ValidationException.class, act);
+        assertTrue(exception.getMessage().contains("Numele nu poate fi gol!"));
+    }
+
+    @Test
+    @DisplayName("TC12 Invalid: Numele este null")
+    @Tag("BVA_Nume")
+    @Timeout(value = 1, unit = TimeUnit.SECONDS)
+    void addProduct_NameNull_ThrowsException() {
+        // Arrange
+        Product invalidProduct = new Product(10, null, 15.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
+
+        // Act
+        Executable act = () -> {
+            validator.validate(invalidProduct);
+            service.addProduct(invalidProduct);
+        };
+
+        // Assert
+        ValidationException exception = assertThrows(ValidationException.class, act);
+        assertTrue(exception.getMessage().contains("Numele nu poate fi gol!"));
     }
 
     // --- TESTE ECP PENTRU PARAMETRUL: PRET ---
