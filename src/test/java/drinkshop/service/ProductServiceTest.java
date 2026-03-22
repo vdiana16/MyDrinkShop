@@ -7,10 +7,7 @@ import drinkshop.repository.Repository;
 import drinkshop.service.validator.ProductValidator;
 import drinkshop.service.validator.ValidationException;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
 
 import java.util.List;
@@ -18,17 +15,46 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProductServiceBvaTest {
+class ProductServiceTest {
+
+    private ProductService service;
+    private ProductValidator validator;
+
     private Repository<Integer, Product> createMockRepo() {
         return new Repository<>() {
-            public Product save(Product entity) { return entity; }
-            public Product findOne(Integer id) { return null; }
-            public List<Product> findAll() { return null; }
-            public Product delete(Integer id) { return null; }
-            public Product update(Product entity) { return null; }
+            public Product save(Product entity) {
+                return entity;
+            }
+
+            public Product findOne(Integer id) {
+                return null;
+            }
+
+            public List<Product> findAll() {
+                return null;
+            }
+
+            public Product delete(Integer id) {
+                return null;
+            }
+
+            public Product update(Product entity) {
+                return null;
+            }
         };
     }
 
+    @BeforeEach
+    void setUp() {
+        service = new ProductService(createMockRepo());
+        validator = new ProductValidator();
+    }
+
+    @AfterEach
+    void tearDown() {
+        service = null;
+        validator = null;
+    }
     // --- TESTE BVA PENTRU PARAMETRUL: ID ---
 
     @Test
@@ -187,5 +213,81 @@ class ProductServiceBvaTest {
         // Assert
         ValidationException exception = assertThrows(ValidationException.class, act);
         assertTrue(exception.getMessage().contains("Pret invalid!"));
+    }
+
+    // --- TESTE ECP PENTRU PARAMETRUL: PRET ---
+    @Test
+    @DisplayName("TC1_ECP Valid: Pretul este in clasa de echivalenta valida (> 0)")
+    @Tag("ECP_Pret")
+    void addProduct_ECP_ValidPrice_Success() {
+        // Arrange
+        Product validProduct = new Product(10, "Limonada", 5.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
+
+        // Act
+        Executable act = () -> {
+            validator.validate(validProduct);
+            service.addProduct(validProduct);
+        };
+
+        // Assert
+        assertDoesNotThrow(act, "Produsul cu pretul 5.0 trebuie să fie salvat cu succes.");
+    }
+
+    @Test
+    @DisplayName("TC2_ECP Invalid: Pretul este in clasa de echivalenta invalida (<= 0)")
+    @Tag("ECP_Pret")
+    void addProduct_ECP_InvalidPrice_ThrowsException() {
+        // Arrange
+        Product invalidProduct = new Product(10, "Limonada", -5.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
+
+        //Act
+        Executable act = () -> {
+            validator.validate(invalidProduct);
+            service.addProduct(invalidProduct);
+        };
+
+        // Assert
+        ValidationException exception = assertThrows(ValidationException.class, act);
+        assertTrue(exception.getMessage().contains("Pret invalid!") || exception.getMessage().toLowerCase().contains("pret"),
+                "Trebuie aruncată o excepție pentru prețul negativ.");
+    }
+
+    // --- TESTE ECP PENTRU PARAMETRUL: NUME ---
+
+    @Test
+    @DisplayName("TC3_ECP Valid: Numele este în clasa de echivalență validă (String nevid)")
+    @Tag("ECP_Nume")
+    void addProduct_ECP_ValidName_Success() {
+        // Arrange
+        Product validProduct = new Product(10, "Latte Machiato", 18.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
+
+        // Act
+        Executable act = () -> {
+            validator.validate(validProduct);
+            service.addProduct(validProduct);
+        };
+
+        // Assert
+        assertDoesNotThrow(act, "Produsul cu nume valid trebuie salvat cu succes.");
+    }
+
+    @Test
+    @DisplayName("TC4_ECP Invalid: Numele este în clasa de echivalență invalidă (String gol)")
+    @Tag("ECP_Nume")
+    void addProduct_ECP_EmptyName_ThrowsException() {
+        // Arrange
+        Product invalidProduct = new Product(10, "", 18.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
+
+        // Act
+        Executable act = () -> {
+            validator.validate(invalidProduct);
+            service.addProduct(invalidProduct);
+        };
+
+        // Assert
+        ValidationException exception = assertThrows(ValidationException.class, act);
+        // Verificăm dacă mesajul conține "nume" (aici poți ajusta în funcție de eroarea exactă pe care o dă validatorul vostru)
+        assertTrue(exception.getMessage().toLowerCase().contains("nume"),
+                "Sistemul trebuie să arunce eroare pentru nume gol.");
     }
 }
