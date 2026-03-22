@@ -8,6 +8,7 @@
     <maven.compiler.target>17</maven.compiler.target>
     <javafx.version>21</javafx.version>
     <junit.version>5.10.0</junit.version>
+
   </properties>
   <dependencies>
     <dependency>
@@ -50,6 +51,13 @@
           <artifactId>controlsfx</artifactId>
           <version>11.0.1</version>
       </dependency>
+
+      <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter</artifactId>
+          <version>${junit.version}</version>
+          <scope>test</scope>
+      </dependency>
   </dependencies>
 
 
@@ -69,6 +77,8 @@
             <artifactId>maven-failsafe-plugin</artifactId>
             <version>2.22.1</version>
         </plugin>
+
+
 
     </plugins>
     </build>
