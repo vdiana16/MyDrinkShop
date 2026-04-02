@@ -348,4 +348,76 @@ class ProductServiceTest {
         assertTrue(exception.getMessage().toLowerCase().contains("nume"),
                 "Sistemul trebuie să arunce eroare pentru nume gol.");
     }
+
+    // =========================================================================
+    // --- TESTE WHITE BOX (WBT) PENTRU: addProductWithHighValidation ---
+    // =========================================================================
+
+    @Test
+    @DisplayName("TC_WBT_01: Statement & All Path Coverage - Succes, bucla se execută, fără cuvinte interzise")
+    @Tag("WBT_SC")
+    @Timeout(value = 1, unit = TimeUnit.SECONDS)
+    void addProductHW_ValidExecution_Success() {
+        // Arrange
+        Product p = new Product(100, "Limonada Fresh", 15.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
+        List<String> forbidden = List.of("alcool", "zahar");
+
+        // Act
+        Executable act = () -> service.addProductWithHighValidation(p, forbidden);
+
+        // Assert
+        assertDoesNotThrow(act, "Produsul valid trebuie salvat fără erori.");
+    }
+
+    @Test
+    @DisplayName("TC_WBT_02: Decision Coverage - Preț invalid (Intră în primul IF)")
+    @Tag("WBT_DC")
+    @Timeout(value = 1, unit = TimeUnit.SECONDS)
+    void addProductHW_InvalidPrice_ThrowsException() {
+        // Arrange
+        Product p = new Product(101, "Limonada", -5.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
+        List<String> forbidden = List.of("alcool");
+
+        // Act
+        Executable act = () -> service.addProductWithHighValidation(p, forbidden);
+
+        // Assert
+        ValidationException exception = assertThrows(ValidationException.class, act);
+        assertTrue(exception.getMessage().contains("Pret invalid"));
+    }
+
+    @Test
+    @DisplayName("TC_WBT_03: Loop Coverage - Lista de cuvinte interzise este goală (While rulează 0 ori)")
+    @Tag("WBT_LC")
+    @Timeout(value = 1, unit = TimeUnit.SECONDS)
+    void addProductHW_EmptyForbiddenList_LoopZeroTimes() {
+        // Arrange
+        Product p = new Product(102, "Ceai Verde", 10.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
+        List<String> forbidden = List.of(); // Lista goală forțează ignorarea buclei while
+
+        // Act
+        Executable act = () -> service.addProductWithHighValidation(p, forbidden);
+
+        // Assert
+        assertDoesNotThrow(act);
+    }
+
+    @Test
+    @DisplayName("TC_WBT_04: Path & Decision Coverage - Cuvânt interzis găsit (Trigger BREAK și Ultimul IF)")
+    @Tag("WBT_APC")
+    @Timeout(value = 1, unit = TimeUnit.SECONDS)
+    void addProductHW_ContainsForbiddenWord_ThrowsException() {
+        // Arrange
+        Product p = new Product(103, "Bere cu alcool", 8.0, CategorieBautura.JUICE, TipBautura.WATER_BASED);
+        // "alcool" este la indexul 1, deci bucla rulează de 2 ori înainte să facă break
+        List<String> forbidden = List.of("zahar", "alcool", "colorant");
+
+        // Act
+        Executable act = () -> service.addProductWithHighValidation(p, forbidden);
+
+        // Assert
+        ValidationException exception = assertThrows(ValidationException.class, act);
+        assertTrue(exception.getMessage().contains("cuvinte interzise"),
+                "Trebuie să arunce eroare pentru cuvânt interzis.");
+    }
 }

@@ -3,6 +3,7 @@ package drinkshop.service;
 import drinkshop.domain.*;
 import drinkshop.repository.Repository;
 import drinkshop.service.validator.ProductValidator;
+import drinkshop.service.validator.ValidationException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +19,26 @@ public class ProductService {
 
     public void addProduct(Product p) {
         validator.validate(p);
+        productRepo.save(p);
+    }
+
+    public void addProductWithHighValidation(Product p, List<String> forbiddenWords) throws ValidationException {
+        if (p.getPret() <= 0) {
+            throw new ValidationException("Pret invalid");
+        }
+        int i = 0;
+        boolean foundForbidden = false;
+        while (i < forbiddenWords.size()) {
+            if (p.getNume().contains(forbiddenWords.get(i))) {
+                foundForbidden = true;
+                break;
+            }
+            i++;
+        }
+        if (foundForbidden) {
+            throw new ValidationException("Numele contine cuvinte interzise");
+        }
+
         productRepo.save(p);
     }
 
