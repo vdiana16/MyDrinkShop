@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><title>testspec Proiect235 - noir3582_WBT</title>
+<link type="text/css" rel="stylesheet" href="https://www.scs.ubbcluj.ro/testlink/gui/themes/default/css/tl_documents.css" />
+<style type="text/css" media="print">.notprintable { display:none;}</style>
+</head>
+<body>
+<div>
+<div style="float:right;">TestLink Community [configure $tlCfg-&gt;document_generator-&gt;company_name]</div>
+<div>&nbsp;</div><hr />
+<p style="text-align: center;"><img alt="TestLink logo" title="configure using $tlCfg->document_generator->company_logo"  width= height= src="https://www.scs.ubbcluj.ro/testlink/gui/themes/default/images/tl-logo-transparent-25.png" /></p></div>
+<div class="doc_title"><p>Test Specification</p></div>
+<div class="doc_title" style="text-align:left;margin: auto;"><p>Test Project: Proiect235<br/>Test Suite: Proiect235 - noir3582_WBT</p></div>
+<div class="summary"><p id="printedby">Printed by TestLink on 02/04/2026</p></div>
+<div class="pagefooter" id="copyright">2012 &copy; TestLink Community</div>
+<h1 class="general" style="page-break-before: always">Table Of Contents</h1><div class="toc"><p style="padding-left: 20px;"><b><a href="#toc_1">1.noir3582_WBT</a></b></p>
+<p style="padding-left: 45px;"><a href="#toc_tc29428">P235-31: TC_VALID_ModificareProdus</a></p><p style="padding-left: 45px;"><a href="#toc_tc29434">P235-34: TC_INVALID_ModificareProdus</a></p></div><h1 class="doclevel" >Scope</h1>
+<div class="txtlevel"><p>Proiect de testare pentru studentii din grupa 235.</p></div>
+ <br/><a name='toc_1'></a>
+<h1 class='doclevel'>1.Test Suite : noir3582_WBT</h1>
+<div><p>Se testeaza modificarea unui produs.&nbsp;</p>
+</div><a name="toc_tc29428"></a><p>&nbsp;</p><div> <table class="tc" width="90%" ><tr><th colspan="4">Test Case P235-31: TC_VALID_ModificareProdus&nbsp;<span style="font-size: 80%;">[Version  : 1]</span></th></tr>
+<tr><td width="20%" valign="top"><span class="label">Author:</span></td><td colspan="3">noir3582</td></tr>
+<tr><td colspan="4"><span class="label">Summary:</span><br /><p>Acest caz de testare verifică funcționalitatea de update&nbsp;a unui produs existent. Testul este proiectat pentru a asigura Statement Coverage&nbsp;și Decision Coverage.</p>
+
+<p>Se furnizează un ID valid al unui produs existent și noi valori pentru atributele acestuia, ex: nume = &quot;Limonadă Fresh&quot;, pret = 18.0.</p>
+
+<p>Forțarea execuției prin bucla de căutare a produsului &icirc;n listă și prin ramura True a condițiilor de validare a noilor date, ating&acirc;nd astfel un drum complet &icirc;n Graful de Control</p>
+</td></tr><tr><td colspan="4"><span class="label">Preconditions:</span><br /><p>&Icirc;n sistem&nbsp;există deja un produs salvat cu un ID cunoscut, ex: id = 10 Valorile inițiale ale produsului sunt diferite de cele care vor fi introduse prin test.</p>
+
+<p>Metoda de modificare&nbsp;este implementată cu o complexitate ciclomatică CC &gt;=&nbsp;5, conțin&acirc;nd cel puțin o structură repetitivă pentru parcurgerea colecției de produse și o structură alternativă pentru validarea input-ului.</p>
+</td></tr><tr><td width="20%" valign="top"><span class="label">Execution type:</span></td><td colspan="3">Automated</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Estimated exec. duration (min):</span></td><td colspan="3"></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Importance:</span></td><td colspan="3">Medium</td></tr>
+<tr><td colspan="4"></td></tr><tr><td > name of the autotest class:</td><td  colspan = "3" >TesteModificareProdus</td></tr>
+<tr><td > name of the test method:</td><td  colspan = "3" >TestModificareProdus_Valid</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Requirements</span><td colspan="3">noir3582_F02:  ModificareProdusNou [Version : 1]<br /></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Keywords:</span></td><td colspan="3">&nbsp;None<br/></td></tr>
+</table>
+</div>
+<a name="toc_tc29434"></a><p>&nbsp;</p><div> <table class="tc" width="90%" ><tr><th colspan="4">Test Case P235-34: TC_INVALID_ModificareProdus&nbsp;<span style="font-size: 80%;">[Version  : 1]</span></th></tr>
+<tr><td width="20%" valign="top"><span class="label">Author:</span></td><td colspan="3">noir3582</td></tr>
+<tr><td colspan="4"><span class="label">Summary:</span><br /><p>Verificarea modului &icirc;n care metoda de modificare gestionează situațiile de eroare pentru a asigura Condition Coverage și Path Coverage pe ramurile de excepție.</p>
+
+<p>Se &icirc;ncearcă modificarea unui produs folosind un ID care nu există &icirc;n sistem sau un preț invalid, de exemplu -50.</p>
+
+<p>Testul este proiectat pentru a parcurge ramura False a verificării de existență sau ramura True a unei validări de date, ex: if (pret &lt; 0).</p>
+</td></tr><tr><td colspan="4"><span class="label">Preconditions:</span><br /><p>Aplicația este pornită și lista de produse este &icirc;ncărcată.</p>
+
+<p>Se alege un ID, ex: 999,&nbsp;despre care se știe sigur că nu este asociat niciunui produs din listă.</p>
+
+<p>Metoda testată trebuie să conțină logica de tratare a erorilor&nbsp;pentru a permite calculul complexității CC &gt;= 5.</p>
+</td></tr><tr><td width="20%" valign="top"><span class="label">Execution type:</span></td><td colspan="3">Automated</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Estimated exec. duration (min):</span></td><td colspan="3"></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Importance:</span></td><td colspan="3">Medium</td></tr>
+<tr><td colspan="4"></td></tr><tr><td > name of the autotest class:</td><td  colspan = "3" >TesteModificareProdus</td></tr>
+<tr><td > name of the test method:</td><td  colspan = "3" >TestModificareProdus_Invalid</td></tr>
+<tr><td width="20%" valign="top"><span class="label">Requirements</span><td colspan="3">noir3582_F02:  ModificareProdusNou [Version : 1]<br /></td></tr>
+<tr><td width="20%" valign="top"><span class="label">Keywords:</span></td><td colspan="3">&nbsp;None<br/></td></tr>
+</table>
+</div>
+
+</body>
+</html>
